@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCollision : MonoBehaviour
+public class HealAction : MonoBehaviour
 {
-
     private GameManager _gameManager;
 
     private void Start()
@@ -15,14 +13,9 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (collision.gameObject.CompareTag("Player") && _gameManager.playerLifes != 3)
         {
-            _gameManager.AddDamage();
-        }
-        
-        if (collision.gameObject.CompareTag("Heal"))
-        {
-            _gameManager.AddLife();
+            _gameManager.playerLifes++;
         }
     }
 }
