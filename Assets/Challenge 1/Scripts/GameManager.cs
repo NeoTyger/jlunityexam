@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,6 +6,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance;
 
     public GameObject player;
 
@@ -13,7 +15,21 @@ public class GameManager : MonoBehaviour
     private bool playerWins;
 
     private Vector3 spawnOfTheLevel = Vector3.zero;
-    
+
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +61,7 @@ public class GameManager : MonoBehaviour
     private void RestartLevel()
     {
         player.transform.position = spawnOfTheLevel;
+        player.transform.rotation = new Quaternion(0f,0f,0f,0f);
     }
 
     private void GameOver()
